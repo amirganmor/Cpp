@@ -133,7 +133,7 @@ void morphOps(Mat& thresh) {
 void trackFilteredObject(Mat threshold, Mat HSV, Mat& cameraFeed) {
 
 
-	vector <Color> greens;
+	vector <Color> CoLors;
 
 	Mat temp;
 	threshold.copyTo(temp);
@@ -160,13 +160,13 @@ void trackFilteredObject(Mat threshold, Mat HSV, Mat& cameraFeed) {
 				//iteration and compare it to the area in the next iteration.
 				if (area > MIN_OBJECT_AREA) {
 
-					Color green;
+					Color CoLor;
 
-					green.setXPos(moment.m10 / area);
-					green.setYPos(moment.m01 / area);
+					CoLor.setXPos(moment.m10 / area);
+					CoLor.setYPos(moment.m01 / area);
 
 
-					greens.push_back(green);
+					CoLors.push_back(CoLor);
 
 					objectFound = true;
 
@@ -178,7 +178,7 @@ void trackFilteredObject(Mat threshold, Mat HSV, Mat& cameraFeed) {
 			//let user know you found an object
 			if (objectFound == true) {
 				//draw object location on screen
-				drawObject(greens, cameraFeed);
+				drawObject(CoLors, cameraFeed);
 			}
 
 		}
@@ -188,7 +188,7 @@ void trackFilteredObject(Mat threshold, Mat HSV, Mat& cameraFeed) {
 void trackFilteredObject(Color theColor, Mat threshold, Mat HSV, Mat& cameraFeed) {
 
 
-	vector <Color> greens;
+	vector <Color> CoLors;
 
 	Mat temp;
 	threshold.copyTo(temp);
@@ -215,14 +215,14 @@ void trackFilteredObject(Color theColor, Mat threshold, Mat HSV, Mat& cameraFeed
 				//iteration and compare it to the area in the next iteration.
 				if (area > MIN_OBJECT_AREA) {
 
-					Color green;
+					Color CoLor;
 
-					green.setXPos(moment.m10 / area);
-					green.setYPos(moment.m01 / area);
-					green.setType(theColor.getType());
-					green.setColour(theColor.getColour());
+					CoLor.setXPos(moment.m10 / area);
+					CoLor.setYPos(moment.m01 / area);
+					CoLor.setType(theColor.getType());
+					CoLor.setColour(theColor.getColour());
 
-					greens.push_back(green);
+					CoLors.push_back(CoLor);
 
 					objectFound = true;
 
@@ -234,7 +234,7 @@ void trackFilteredObject(Color theColor, Mat threshold, Mat HSV, Mat& cameraFeed
 			//let user know you found an object
 			if (objectFound == true) {
 				//draw object location on screen
-				drawObject(greens, cameraFeed);
+				drawObject(CoLors, cameraFeed);
 			}
 
 		}
@@ -244,7 +244,7 @@ void trackFilteredObject(Color theColor, Mat threshold, Mat HSV, Mat& cameraFeed
 int main(int argc, char* argv[])
 {
 	//if we would like to calibrate our filter values, set to true.
-	bool calibrationMode = true;
+	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
 	Mat cameraFeed;
@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
 			Color green("green"), yellow("yellow"), red("red");
 
 
-			//first find greens
+			//first find CoLors
 			cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
 			inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
 			morphOps(threshold);
