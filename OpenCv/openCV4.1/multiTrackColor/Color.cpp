@@ -36,8 +36,8 @@ Color::Color(string name) {
 		setHSVmin(Scalar(0, 100, 100));
 		setHSVmax(Scalar(10, 255, 255));
 
-		//BGR value for Yellow:
-		setColour(Scalar(0, 255, 255));
+		//BGR value for Red:
+		setColour(Scalar(0, 0, 255));
 
 		//set name
 		setType("red");
@@ -50,8 +50,10 @@ Color::Color(string name) {
 		setHSVmin(Scalar(20, 100, 100));
 		setHSVmax(Scalar(30, 255, 255));
 
-		//BGR value for Red:
-		setColour(Scalar(0, 0, 255));
+
+
+		//BGR value for Yellow:
+		setColour(Scalar(0, 255, 255));
 
 		//set name
 		setType("Yellow");
