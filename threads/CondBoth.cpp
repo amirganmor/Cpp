@@ -28,7 +28,7 @@ void func() {
 				ctr = 0;
 				cv.notify_all();
 			}
-			cv.wait(guard, [] {return ready; });
+			cv.wait(guard, [] {return !ctr; });
 			
 		}	
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
