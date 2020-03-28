@@ -13,7 +13,6 @@ using namespace std;
 
 mutex mu;
 condition_variable cv;
-bool ready = false;
 int ctr = 0;
 
 
@@ -27,7 +26,6 @@ void func() {
 			cout << "thread : " << count << "     :t1" << endl;
 			ctr++;
 			if (ctr == 2) {
-				ready = true;
 				ctr = 0;
 				cv.notify_all();
 			}
@@ -49,7 +47,6 @@ void func2() {
 			cout << "thread : " << count2 << "     :t2 " << endl;
 			ctr++;
 			if (ctr == 2) {
-				ready = true;
 				ctr = 0;
 				cv.notify_all();
 			}
