@@ -7,6 +7,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -14,6 +15,8 @@ mutex mu;
 condition_variable cv;
 bool ready = false;
 int ctr = 0;
+
+
 
 void func() {
 	for (int i = 0; i <= 10; i++) {
@@ -29,10 +32,10 @@ void func() {
 				cv.notify_all();
 			}
 			cv.wait(guard, [] {return !ctr; });
-			
-		}	
+
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		
+
 
 	}
 }
@@ -43,7 +46,7 @@ void func2() {
 		count2++;
 		{
 			std::unique_lock<std::mutex> guard(mu);
-			cout << "thread : " << count2 << "     :t2 " <<   endl;
+			cout << "thread : " << count2 << "     :t2 " << endl;
 			ctr++;
 			if (ctr == 2) {
 				ready = true;
@@ -52,8 +55,8 @@ void func2() {
 			}
 			cv.wait(guard, [] {return !ctr; });
 		}
-	    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
 	}
 }
 
@@ -61,12 +64,13 @@ void func2() {
 
 int main()
 {
+	clock_t tStart = clock();
 	std::thread t1(func);
 	std::thread t2(func2);
 	t1.join();
 	t2.join();
-
-
+	printf("Time taken: %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+	cout << endl << "finished! press key to end" << endl;
 	cin.get();
 	return 0;
 }
